@@ -65,27 +65,20 @@ function triangle(x1, y1, x2, y2, x3, y3, mode) {
     ctx.stroke();
   }
 }
-drawAnyShape(300, 300, 2);
+drawAnyShape(300, 300, 4, 30);
 
-function drawAnyShape(shapeCenterX, shapeCenterY, numberOfSpikes) {
-  let x = shapeCenterX,
-    y = shapeCenterY,
-    rotations = (Math.PI / 2) * 3,
+function drawAnyShape(shapeCenterX, shapeCenterY, numberOfSpikes, size) {
+  let
+    angle = (Math.PI / 2) * 3,
     step = Math.PI / numberOfSpikes;
   ctx.beginPath();
-  ctx.moveTo(shapeCenterX, shapeCenterY);
-  for (let i = 0; i < numberOfSpikes; i++) {
-    x = shapeCenterX + Math.cos(rotations) * 30;
-    y = shapeCenterY + Math.sin(rotations) * 30;
+  ctx.moveTo(shapeCenterX + size, shapeCenterY);
+  for (let i = 0; i < numberOfSpikes - 1; i++) {
+    angle += step;
+    x = shapeCenterX + Math.cos(angle) * size;
+    y = shapeCenterY + Math.sin(angle) * size;
     ctx.lineTo(x, y);
-    rotations += step;
-
-    x = shapeCenterX + Math.cos(rotations) * 30;
-    y = shapeCenterY + Math.sin(rotations) * 30;
-    ctx.lineTo(x, y);
-    rotations += step;
   }
-  ctx.lineTo(shapeCenterX, shapeCenterY);
   ctx.closePath();
   ctx.lineWidth = 5;
   stroke("blue");
