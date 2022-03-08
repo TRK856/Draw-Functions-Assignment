@@ -4,16 +4,29 @@ let ctx = cnv.getContext("2d");
 cnv.width = 800;
 cnv.height = 600;
 
-line(100, 4, 5, 200);
-rect(100, 200, 300, 100, "fill");
-circle(10, 20, 30, "fill");
-text("lol", 100, 40, "fill");
-fill("green");
-triangle(0, 300, 450, 230, 500, 300, "fill");
-stroke("red");
+fill("black")
+stroke("green", 2)
+drawAStar(300, 200, 5, 50, 20, [true, false]);
 
-function stroke(style) {
+fill("gold")
+stroke("gold",5)
+drawAStar(0, 0, 100, 200, 0, [false, true]);
+
+fill("gold")
+stroke("green", 1)
+drawAStar(500, 400, 400, 200, 0, [false, true]);
+
+let x1 = 500, y1 = 40, x2 = 550, y2 = 140, x3 = 600, y3 = 40; 
+
+triangle(500, 40, 550, 140, 600, 40, "stroke")
+line(500, 40, 500 - 20, 40 - 15)
+line(550, 140, 550 - 20, 140 - 15)
+line(600, 40, 600 - 20, 40 - 15)
+line(550 - 20, 140 - 15,  500 - 20, 40 - 15)
+
+function stroke(style, lineWidth) {
   ctx.strokeStyle = style;
+  ctx.lineWidth = lineWidth
 }
 
 function fill(style) {
@@ -65,24 +78,31 @@ function triangle(x1, y1, x2, y2, x3, y3, mode) {
     ctx.stroke();
   }
 }
-drawAnyShape(300, 300, 4, 30);
 
-function drawAnyShape(shapeCenterX, shapeCenterY, numberOfSpikes, size) {
+function drawAStar(starCenterX, starCenterY, numberOfSpikes, outerDepth, innerDepth, [fill, stroke]) {
   let
-    angle = (Math.PI / 2) * 3,
+    angle = 0,
     step = Math.PI / numberOfSpikes;
   ctx.beginPath();
-  ctx.moveTo(shapeCenterX + size, shapeCenterY);
-  for (let i = 0; i < numberOfSpikes - 1; i++) {
+  for (let i = 0; i < numberOfSpikes; i++) {
     angle += step;
-    x = shapeCenterX + Math.cos(angle) * size;
-    y = shapeCenterY + Math.sin(angle) * size;
+    x = starCenterX + Math.cos(angle) * outerDepth;
+    y = starCenterY + Math.sin(angle) * outerDepth;
+    ctx.lineTo(x, y);
+
+    angle += step;
+    x = starCenterX + Math.cos(angle) * innerDepth;
+    y = starCenterY + Math.sin(angle) * innerDepth;
     ctx.lineTo(x, y);
   }
-  ctx.closePath();
-  ctx.lineWidth = 5;
-  stroke("blue");
-  ctx.stroke();
-  fill("skyblue");
-  ctx.fill();
+  if (fill === true && stroke === true){
+    ctx.fill();
+    ctx.closePath();
+    ctx.stroke()
+  } else if (stroke === true) {
+    ctx.closePath();
+    ctx.stroke();
+  } else if (fill === true) {
+    ctx.fill();
+  }
 }
