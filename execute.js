@@ -31,6 +31,7 @@ stroke("black", 10)
 drawRealisticTriangle(200, 140, 250, 540, 500, 40, [false])
 
 // draw any shape
+// idk how this works
 drawAnyShape(200, 100, 4, 200, [false, true]);
 drawAnyShape(200, 10, 6, 200, [true, true]);
 drawAnyShape(200, 100, 4, 20, [false, true]);
