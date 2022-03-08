@@ -121,3 +121,42 @@ function drawRealisticTriangle(x1, y1, x2, y2, x3, y3, [drawThirdLine]) {
         line(x3 - 20, y3 - 15,  x2 - 20, y2 - 15)
     }
 }
+
+// my functions
+function drawAnyShape(shapeCenterX, shapeCenterY, numberOfSides, size, [fill, stroke]) {
+    ctx.save();
+    ctx.translate(shapeCenterX,shapeCenterY);
+    ctx.rotate(0.8); //Rotate the canvas by 90 degrees
+
+    // define our varibles that need to remain constant
+    let
+        angle = 0,
+        step = Math.PI * 2 / numberOfSides;
+    // begin path
+    ctx.beginPath();
+
+    // loop to draw stars
+    for (let i = 0; i < numberOfSides; i++) {
+        // adds to the angle the more the loop is repeated
+        angle += step;
+
+        x = shapeCenterX + Math.cos(angle) * size;
+        y = shapeCenterY + Math.sin(angle) * size;
+
+        // draws the calculated line
+        ctx.lineTo(x, y);
+    }
+
+    // gives the abilty to have both "stroke" and "fill" activated on the same time
+    if (fill === true && stroke === true){
+        ctx.fill();
+        ctx.closePath();
+        ctx.stroke()
+    } else if (stroke === true) {
+        ctx.closePath();
+        ctx.stroke();
+    } else if (fill === true) {
+        ctx.fill();
+    }
+    ctx.restore(); // to reset the canvas rotation
+}
